@@ -2,10 +2,13 @@
 import http.server
 import socketserver
 import os
+from datetime import datetime
 
 #print('source code for "http.server":', http.server.__file__)
 
 class web_server(http.server.SimpleHTTPRequestHandler):
+    
+    
     
     def do_GET(self):
 
@@ -17,6 +20,10 @@ class web_server(http.server.SimpleHTTPRequestHandler):
             self.send_header("Content-type", "text/html; charset=UTF-8")
             self.end_headers()            
             self.wfile.write(b"Hello World!\n")
+            now = datetime.now()
+            t = time.localtime()
+            current_time = now.strftime("%H:%M:%S", t)
+            self.wfile.write(str.encode(current_time))
         else:
             super().do_GET()
     
