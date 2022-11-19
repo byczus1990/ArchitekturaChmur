@@ -2,7 +2,7 @@
 import http.server
 import socketserver
 import os
-from datetime import datetime
+from datetime import datetime, timedelta
 import time
 
 #print('source code for "http.server":', http.server.__file__)
@@ -23,7 +23,8 @@ class web_server(http.server.SimpleHTTPRequestHandler):
             self.wfile.write(b"Hello World!\n")
             now = datetime.now()
             t = time.localtime()
-            current_time = now.strftime("%H:%M:%S")
+            new_time = now + timedelta(hours=1)
+            current_time = new_time.strftime("%H:%M:%S")   
             self.wfile.write(str.encode(current_time))
         else:
             super().do_GET()
