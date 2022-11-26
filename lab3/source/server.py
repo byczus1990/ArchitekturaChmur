@@ -2,8 +2,6 @@
 import http.server
 import socketserver
 import os
-from datetime import datetime, timedelta
-import time
 from urllib.parse import urlparse, parse_qs
 
 #print('source code for "http.server":', http.server.__file__)
@@ -17,7 +15,8 @@ class web_server(http.server.SimpleHTTPRequestHandler):
 #        print(self.path)
         path = urlparse(self.path) 
         params = parse_qs(path.query)
-        #print(params) 
+        string_from_query = params.get('str', None)
+        print("STRING PASSED AS QUERY:"string_from_query) 
         
         if self.path == '/':
             self.protocol_version = 'HTTP/1.1'
