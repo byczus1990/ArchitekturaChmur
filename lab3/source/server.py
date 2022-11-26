@@ -14,8 +14,9 @@ class web_server(http.server.SimpleHTTPRequestHandler):
     
     def do_GET(self):
 
-        print(self.path)
-        params = parse_qs(urlparse(self.path).query)
+#        print(self.path)
+        path = urlparse(self.path) 
+        params = parse_qs(path.query)
         #print(params) 
         
         if self.path == '/':
@@ -26,16 +27,7 @@ class web_server(http.server.SimpleHTTPRequestHandler):
             
             if not params:            
                 self.wfile.write(b"Hello World!\n")
-            elif(params['cmd'] == ['time']):
-                now = datetime.now()
-                t = time.localtime()
-                new_time = now + timedelta(hours=1)
-                current_time = new_time.strftime("%H:%M:%S")   
-                self.wfile.write(str.encode(current_time))                       
-            elif(params.get('cmd', None) == ['rev']):
-                reverseString = query_params.get('str', None)[0]
-                if reverseString:
-                    self.wfile.write(str.encode(reverseString[::-1]))
+            
         else:
             super().do_GET()
     
